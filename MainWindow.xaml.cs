@@ -11,7 +11,20 @@ namespace RadiumLauncher
         public MainWindow()
         {
             InitializeComponent();
+            InitializeWebView();
             this.Loaded += (s, e) => CheckPath();
+        }
+
+        private async void InitializeWebView()
+        {
+            try
+            {
+                await webView.EnsureCoreWebView2Async(null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("WebView2 failed to load: " + ex.Message);
+            }
         }
 
         private void CheckPath()
