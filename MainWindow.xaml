@@ -4,7 +4,7 @@
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         Title="Radium Launcher" Height="600" Width="1000" 
         Background="#121212" WindowStartupLocation="CenterScreen"
-        Icon="Radeon_8x.png"
+        Icon="Radeon_8x.ico"
         WindowStyle="None" AllowsTransparency="True">
 
     <WindowChrome.WindowChrome>

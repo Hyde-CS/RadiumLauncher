@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Radeon_8x.ico" />
+    <Resource Include="Radeon_8x.ico" />
   </ItemGroup>
 
   <ItemGroup>
