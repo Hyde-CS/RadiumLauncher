@@ -22,3 +22,6 @@ An unofficial, open-source launcher for Radium (the Rec Room revival). This prog
 
 - No Data Collection: This app does not have access to your Radium account info or APIs.
 - Open Source: Feel free to look through the C# code to see exactly how it handles your files.
+
+## Info
+This project will no longer get updated. This was intended as a simple program for me to use, yet I decided to publish it on GitHub. There is obviously no license on the code, so anyone may fork this repo and continue the project if they wish too.
