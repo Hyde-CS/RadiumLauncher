@@ -34,5 +34,17 @@ namespace RadiumLauncher.Properties {
                 this["GamePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double TotalPlayTime {
+            get {
+                return ((double)(this["TotalPlayTime"]));
+            }
+            set {
+                this["TotalPlayTime"] = value;
+            }
+        }
     }
 }

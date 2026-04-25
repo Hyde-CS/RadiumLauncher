@@ -63,19 +63,44 @@ namespace RadiumLauncher
             }
         }
 
-        private void LaunchGame(string batName)
+        private async void LaunchGame(string batName)
         {
             string folder = Properties.Settings.Default.GamePath;
             string batPath = Path.Combine(folder, batName);
 
             if (File.Exists(batPath))
             {
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName = batPath,
-                    WorkingDirectory = folder,
-                    UseShellExecute = true
-                });
+                    Process gameProcess = Process.Start(new ProcessStartInfo
+                    {
+                        FileName = batPath,
+                        WorkingDirectory = folder,
+                        UseShellExecute = true
+                    });
+
+                    if (gameProcess != null)
+                    {
+                        DateTime startTime = DateTime.Now;
+
+                        this.Hide();
+
+                        await gameProcess.WaitForExitAsync();
+
+                        TimeSpan sessionTime = DateTime.Now - startTime;
+
+                        Properties.Settings.Default.TotalPlayTime += sessionTime.TotalMinutes;
+                        Properties.Settings.Default.Save();
+
+                        this.Show();
+                        UpdatePlayTimeDisplay();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error launching game: {ex.Message}");
+                    this.Show();
+                }
             }
             else
             {
@@ -98,6 +123,35 @@ namespace RadiumLauncher
         private void Discord_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://discord.gg/radium-rr") { UseShellExecute = true });
+        }
+
+        private void ViewLog_Click(object sender, RoutedEventArgs e)
+        {
+            string path = Properties.Settings.Default.GamePath;
+            string batPath = System.IO.Path.Combine(path, "RecRoomLog.bat");
+
+            if (System.IO.File.Exists(batPath))
+            {
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = batPath,
+                    WorkingDirectory = path,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+            }
+            else
+            {
+                MessageBox.Show("Could not find RecRoomLog.bat in the game folder.");
+            }
+        }
+
+        private void UpdatePlayTimeDisplay()
+        {
+            double totalMinutes = Properties.Settings.Default.TotalPlayTime;
+            int hours = (int)(totalMinutes / 60);
+            int mins = (int)(totalMinutes % 60);
+            txtPlayTime.Text = $"Played: {hours}h {mins}m";
         }
 
         private void Minimize_Click(object sender, RoutedEventArgs e) => this.WindowState = WindowState.Minimized;
